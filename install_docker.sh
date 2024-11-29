@@ -27,3 +27,9 @@ sudo systemctl enable --now docker
 # Verify Docker installation
 sudo docker --version
 sudo docker-compose --version
+
+docker pull vanminhph23/rabbitmq:1.0
+
+docker pull vanminhph23/centos7.java8.spring:1.5
+
+docker pull vanminhph23/ubuntu.java17.spring:1.2
