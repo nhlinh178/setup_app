@@ -48,3 +48,5 @@ docker load -i /tmp/app-image/centos7_java8_spring_1.5.tar
 docker load -i /tmp/app-image/ubuntu_java17_spring_1.2.tar
 
 docker load -i /tmp/app-image/zipkin_latest.tar
+
+docker images
