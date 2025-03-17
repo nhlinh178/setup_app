@@ -41,12 +41,12 @@ sudo systemctl enable --now docker
 sudo docker --version
 sudo docker-compose --version
 
-docker load -i /tmp/app-image/rabbitmq_1.0.tar
+docker load -i /data/server/app-image/rabbitmq_1.0.tar
 
-docker load -i /tmp/app-image/centos7_java8_spring_1.5.tar
+docker load -i /data/server/app-image/centos7_java8_spring_1.5.tar
 
-docker load -i /tmp/app-image/ubuntu_java17_spring_1.2.tar
+docker load -i /data/server/app-image/ubuntu_java17_spring_1.2.tar
 
-docker load -i /tmp/app-image/zipkin_latest.tar
+docker load -i /data/server/app-image/zipkin_latest.tar
 
 docker images
