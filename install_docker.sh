@@ -36,10 +36,9 @@ echo '{
 
 # Enable and start Docker service
 sudo systemctl enable --now docker
-
+sudo usermod -aG docker isofh
 # Verify Docker installation
 sudo docker --version
-sudo docker-compose --version
 
 docker load -i /data/server/app-image/rabbitmq_1.0.tar
 
