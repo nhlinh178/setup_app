@@ -41,8 +41,10 @@ sudo systemctl enable --now docker
 sudo docker --version
 sudo docker-compose --version
 
-docker pull vanminhph23/rabbitmq:1.0
+docker load -i /tmp/app-image/rabbitmq_1.0.tar
 
-docker pull vanminhph23/centos7.java8.spring:1.5
+docker load -i /tmp/app-image/centos7_java8_spring_1.5.tar
 
-docker pull vanminhph23/ubuntu.java17.spring:1.2
+docker load -i /tmp/app-image/ubuntu_java17_spring_1.2.tar
+
+docker load -i /tmp/app-image/zipkin_latest.tar
