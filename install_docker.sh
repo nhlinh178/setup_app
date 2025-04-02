@@ -40,6 +40,100 @@ sudo usermod -aG docker isofh
 # Verify Docker installation
 sudo docker --version
 
+# Add funtion 
+echo "alias his='cd /data/server/emr/td-production/his'
+function commitId() {
+    echo http://${3:-127.0.0.1}:${2:-2301}/api/${1:-his}/v1/utils/commitId
+    curl http://${3:-127.0.0.1}:${2:-2301}/api/${1:-his}/v1/utils/commitId
+}
+function log() {
+  find log* -maxdepth 1 -type f -name "*.tmp" -mmin +60 -delete
+  if [ -n "$1" ]; then
+    suffix="-*-*${1}*"
+  else
+    suffix=""
+  fi
+  log_file=$(find log* -maxdepth 1 -type f -name "*${suffix}.log" -printf "%f %T@ %p\n" | awk '{ print length($1), $2, $3 }' | sort -k1,1n -k2,2nr | head -n 1 | awk '{print $3}')
+  if [ -z "$log_file" ]; then
+    echo Không tìm được file log: *${suffix}.log
+  else
+    echo File log: ${log_file}
+    if [[ "${2}" == "3" ]]; then
+      less $log_file
+    elif [[ "${2}" == "2" ]]; then
+      less +G $log_file
+    else
+      tail -f $log_file
+    fi
+  fi
+}
+
+alias dils='docker image ls'
+alias dirm='docker image rm'
+
+alias dcls='docker container ls -a --size'
+alias dcrm='docker container rm'
+
+alias dcb='docker build . -t'
+
+alias dr='docker restart'
+
+alias dl='docker logs'
+
+alias ds='docker stats'
+
+alias din='docker inspect'
+
+alias dcc='docker cp'
+
+alias dload='docker load -i'
+
+function dlf() {
+
+	container=$1
+
+    keyword1=${2:-ZZZZAAAA}
+
+    keyword2=${3:-ZZZZAAAA}
+
+    keyword3=${4:-ZZZZAAAA}
+
+    if [[ -z "${container}" ]]; then
+        echo Invalid container
+        return
+    fi
+
+	docker logs -f --since 30s ${container} | sed --unbuffered -e 's/\(.*'${keyword1}'.*\)/\o033[31m\1\o033[39m/' -e 's/\(.*'${keyword2}'.*\)/\o033[33m\1\o033[39m/' -e 's/\(.*'${keyword3}'.*\)/\o033[32m\1\o033[39m/'
+}
+
+function dcl() {
+	sudo truncate -s 0 $(docker inspect --format='{{.LogPath}}' $1)
+}
+
+function drun() {
+	docker run --rm --name $2 -it $1 /bin/bash
+}
+
+function drun_network_host() {
+	docker run --rm --network=host --name $2 -it $1 /bin/bash
+}
+
+function dsave() {
+	docker save $1 | gzip > $2.tar.gz
+}
+
+
+function dexec() {
+	docker exec -u 0 -it $1 /bin/bash
+}
+
+function dt() {
+	for i in $( docker container ls --format "{{.Names}}" ); do
+		echo Container: $i
+		docker top $i -eo pid,ppid,cmd,uid
+	done
+}" | sudo tee -a /home/isofh/.bashrc 
+
 docker load -i /data/server/app-image/rabbitmq_1.0.tar
 
 docker load -i /data/server/app-image/centos7_java8_spring_1.5.tar
