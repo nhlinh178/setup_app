@@ -39,7 +39,8 @@ sudo systemctl enable --now docker
 sudo usermod -aG docker isofh
 # Verify Docker installation
 sudo docker --version
-
+# Install Cadvisor
+docker run  --volume=/:/rootfs:ro   --volume=/var/run:/var/run:ro   --volume=/sys:/sys:ro   --volume=/data/docker/:/var/lib/docker:ro   --volume=/dev/disk/:/dev/disk:ro   --publish=9092:8080   --detach=true   --restart always   --name=cadvisor   --privileged   --device=/dev/kmsg   gcr.io/cadvisor/cadvisor:latest
 # Add funtion 
 echo "alias his='cd /data/server/emr/td-production/his'
 function commitId() {
