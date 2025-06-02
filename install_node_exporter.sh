@@ -7,7 +7,8 @@ DOWNLOAD_URL="https://github.com/prometheus/node_exporter/releases/download/v${N
 
 echo "[*] Tạo user hệ thống cho node_exporter..."
 sudo useradd --system --no-create-home --shell /bin/false $NODE_EXPORTER_USER
-
+sudo groupadd $NODE_EXPORTER_USER
+sudo usermod -g $NODE_EXPORTER_USER $NODE_EXPORTER_USER
 echo "[*] Tải Node Exporter v${NODE_EXPORTER_VERSION}..."
 wget $DOWNLOAD_URL -O node_exporter.tar.gz
 
