@@ -21,8 +21,10 @@ sudo dnf config-manager --add-repo https://download.docker.com/linux/rhel/docker
 # Install Docker and related components
 sudo dnf install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
-# Enable and Start Docker service
-sudo systemctl enable docker --now
+# Enable and start Docker service
+sudo systemctl enable --now docker
+sudo usermod -aG docker isofh
+
 # Stop Docker service to prepare for directory change
 sudo systemctl stop docker
 
@@ -36,9 +38,9 @@ echo '{
     "data-root": "/data/docker"
 }' | sudo tee /etc/docker/daemon.json
 
-# Enable and start Docker service
-sudo systemctl enable --now docker
-sudo usermod -aG docker isofh
+# Restart Docker service
+sudo systemctl restart docker
+
 # Verify Docker installation
 sudo docker --version
 # Install Cadvisor
