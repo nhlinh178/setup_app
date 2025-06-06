@@ -10,6 +10,7 @@ else
 fi 
 echo "[*] Tạo user hệ thống cho node_exporter..."
 if ! id "node_exporter" &>/dev/null; then
+    echo "User node_exporter chưa tồn tại. Tiến hành tạo mới"
     sudo useradd --system --no-create-home --shell /bin/false node_exporter
 else
     echo "User node_exporter đã tồn tại."
