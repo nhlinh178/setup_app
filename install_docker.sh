@@ -46,7 +46,7 @@ sudo docker --version
 # Install Cadvisor
 docker run  --volume=/:/rootfs:ro   --volume=/var/run:/var/run:ro   --volume=/sys:/sys:ro   --volume=/data/docker/:/var/lib/docker:ro   --volume=/dev/disk/:/dev/disk:ro   --publish=9092:8080   --detach=true   --restart always   --name=cadvisor   --privileged   --device=/dev/kmsg   gcr.io/cadvisor/cadvisor:latest
 # Add funtion 
-echo 'alias his='cd /data/server/emr/td-production/his'
+echo "alias his='cd /data/server/emr/td-production/his'
 function commitId() {
     echo http://${3:-127.0.0.1}:${2:-2301}/api/${1:-his}/v1/utils/commitId
     curl http://${3:-127.0.0.1}:${2:-2301}/api/${1:-his}/v1/utils/commitId
@@ -137,7 +137,7 @@ function dt() {
 		echo Container: $i
 		docker top $i -eo pid,ppid,cmd,uid
 	done
-}' | sudo tee -a /home/isofh/.bashrc 
+}" | sudo tee -a /home/isofh/.bashrc 
 
 docker load -i /data/server/app-image/rabbitmq_1.0.tar
 
